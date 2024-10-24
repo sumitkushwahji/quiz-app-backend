@@ -1,6 +1,5 @@
 package com.sumit.ltim.web.quiz.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,13 +17,16 @@ public class Question {
 
     private String explanation;
 
-    private String subject; // Added subject field
+    private String subject;
 
-    private String topic; // Added topic field
+    private String topic;
 
-    private String exam; // Added exam field (nullable)
+    private String exam;
+
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;  // Reference to the Test entity
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Option> options;
 }
