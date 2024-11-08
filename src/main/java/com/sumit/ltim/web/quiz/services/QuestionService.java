@@ -14,6 +14,8 @@ public interface QuestionService {
     void deleteQuestion(Long id);
 
     List<String> getAllUniqueSubjects();
-    List<String> getUniqueTopicsBySubject(String subject);
+    List<String> getUniqueTopics();
     List<String> getAllUniqueExams();
+
+    List<Question> getQuestionsBySubject(String subject);
 }

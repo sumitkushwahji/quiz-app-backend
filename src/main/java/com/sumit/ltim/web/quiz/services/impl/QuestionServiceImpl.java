@@ -96,12 +96,19 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<String> getUniqueTopicsBySubject(String subject) {
-        return questionRepository.findDistinctTopicsBySubject(subject);
+    public List<String> getUniqueTopics() {
+        return questionRepository.findDistinctTopics();
     }
+
 
     @Override
     public List<String> getAllUniqueExams() {
         return questionRepository.findDistinctExams();
+    }
+
+    @Override
+    // Fetch all questions by subject
+    public List<Question> getQuestionsBySubject(String subject) {
+        return questionRepository.findBySubject(subject);
     }
 }

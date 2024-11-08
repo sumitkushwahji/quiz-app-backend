@@ -42,6 +42,12 @@ public class QuestionController {
         return ResponseEntity.ok(questions);
     }
 
+    // Get all questions by subject
+    @GetMapping("/{subject}")
+    public List<Question> getQuestionsBySubject(@PathVariable String subject) {
+        return questionService.getQuestionsBySubject(subject);
+    }
+
 //    @GetMapping
 //    public ResponseEntity<List<Question>> getAllQuestions() {
 //        List<Question> questions = questionService.getAllQuestions();
@@ -67,8 +73,8 @@ public class QuestionController {
     }
 
     @GetMapping("/unique/topics")
-    public ResponseEntity<List<String>> getUniqueTopicsBySubject(@RequestParam String subject) {
-        List<String> topics = questionService.getUniqueTopicsBySubject(subject);
+    public ResponseEntity<List<String>> getUniqueTopics() {
+        List<String> topics = questionService.getUniqueTopics();
         return ResponseEntity.ok(topics);
     }
 

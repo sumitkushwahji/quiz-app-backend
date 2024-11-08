@@ -28,9 +28,12 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("SELECT DISTINCT q.subject FROM Question q")
     List<String> findDistinctSubjects();
 
-    @Query("SELECT DISTINCT q.topic FROM Question q WHERE q.subject = ?1")
-    List<String> findDistinctTopicsBySubject(String subject);
+    @Query("SELECT DISTINCT q.topic FROM Question q ")
+    List<String> findDistinctTopics();
 
     @Query("SELECT DISTINCT q.exam FROM Question q")
     List<String> findDistinctExams();
+
+    // Query to fetch questions by subject
+    List<Question> findBySubject(String subject);
 }
