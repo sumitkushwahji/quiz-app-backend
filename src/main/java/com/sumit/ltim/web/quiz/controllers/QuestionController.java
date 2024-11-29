@@ -31,28 +31,40 @@ public class QuestionController {
         Question question = questionService.getQuestionById(id);
         return ResponseEntity.ok(question);
     }
+    @GetMapping("/test/{testId}")
+    public List<Question> getQuestionsByTestId(@PathVariable Long testId) {
+        return questionService.getQuestionsByTestId(testId);
+    }
+
+//    @GetMapping
+//    public ResponseEntity<List<Question>> getQuestions(
+//            @RequestParam(required = false) String subject,
+//            @RequestParam(required = false) String topic,
+//            @RequestParam(required = false) String exam,
+//            @RequestParam(required = false) QuestionType questionType
+//    ) {
+//        List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, questionType);
+//        return ResponseEntity.ok(questions);
+//    }
+    // Endpoint to fetch filtered questions
     @GetMapping
-    public ResponseEntity<List<Question>> getQuestions(
+    public ResponseEntity<List<Question>> getFilteredQuestions(
             @RequestParam(required = false) String subject,
             @RequestParam(required = false) String topic,
             @RequestParam(required = false) String exam,
-            @RequestParam(required = false) QuestionType questionType
+            @RequestParam(required = false) String difficulty
     ) {
-        List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, questionType);
+        List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, difficulty);
         return ResponseEntity.ok(questions);
     }
 
     // Get all questions by subject
-    @GetMapping("/{subject}")
-    public List<Question> getQuestionsBySubject(@PathVariable String subject) {
-        return questionService.getQuestionsBySubject(subject);
+    @GetMapping("/subject/{subject}")
+    public ResponseEntity<List<Question>> getQuestionsBySubject(@PathVariable String subject) {
+        return ResponseEntity.ok(questionService.getQuestionsBySubject(subject));
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Question>> getAllQuestions() {
-//        List<Question> questions = questionService.getAllQuestions();
-//        return ResponseEntity.ok(questions);
-//    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question question) {

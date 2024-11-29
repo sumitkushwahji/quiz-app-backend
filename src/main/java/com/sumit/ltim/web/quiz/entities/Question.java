@@ -22,9 +22,8 @@ public class Question {
 
     private String difficulty; // For easy, medium, hard categorization
 
-    @ManyToOne
-    @JoinColumn(name = "test_id")
-    private Test test;
+    @ManyToMany(mappedBy = "questions")
+    private List<Test> tests; // Link to multiple tests
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options;

@@ -11,4 +11,5 @@ public interface TestService {
     List<Test> getAllTests();
     Test updateTest(Long id, Test test);
     void deleteTest(Long id);
+    Test createTestWithRandomQuestions(String subject, String topic, String exam, int numberOfQuestions);
 }

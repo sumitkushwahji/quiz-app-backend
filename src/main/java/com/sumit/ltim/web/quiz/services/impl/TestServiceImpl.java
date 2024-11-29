@@ -16,10 +16,14 @@ import java.util.List;
 public class TestServiceImpl implements TestService {
 
     private final TestRepository testRepository;
+    private final QuestionRepository questionRepository;
+
+
 
     @Autowired
-    public TestServiceImpl(TestRepository testRepository) {
+    public TestServiceImpl(TestRepository testRepository, QuestionRepository questionRepository) {
         this.testRepository = testRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test getTestById(Long id) {
         return testRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Test not found with id " + id));
+                .orElseThrow(() -> new TestNotFoundException("Test not found with id " + id));
     }
 
     @Override
@@ -51,5 +55,14 @@ public class TestServiceImpl implements TestService {
     @Override
     public void deleteTest(Long id) {
         testRepository.deleteById(id);
+    }
+
+    public Test createTestWithRandomQuestions(String subject, String topic, String exam, int numberOfQuestions) {
+        List<Question> randomQuestions = questionRepository.findRandomQuestions(subject, topic, exam, numberOfQuestions);
+        Test test = new Test();
+        test.setTestName("Randomized Test");
+        test.setDescription("Test generated with random questions");
+        test.setQuestions(randomQuestions);
+        return testRepository.save(test);
     }
 }

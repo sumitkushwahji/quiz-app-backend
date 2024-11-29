@@ -48,4 +48,16 @@ public class TestController {
         testService.deleteTest(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @PostMapping("/create-random")
+    public ResponseEntity<Test> createTestWithRandomQuestions(
+            @RequestParam String subject,
+            @RequestParam String topic,
+            @RequestParam String exam,
+            @RequestParam int numberOfQuestions
+    ) {
+        Test test = testService.createTestWithRandomQuestions(subject, topic, exam, numberOfQuestions);
+        return ResponseEntity.ok(test);
+    }
 }

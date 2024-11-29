@@ -3,6 +3,7 @@ package com.sumit.ltim.web.quiz.services.impl;
 import com.sumit.ltim.web.quiz.entities.Option;
 import com.sumit.ltim.web.quiz.entities.Question;
 import com.sumit.ltim.web.quiz.entities.QuestionType;
+import com.sumit.ltim.web.quiz.exceptions.QuestionNotFoundException;
 import com.sumit.ltim.web.quiz.repositories.QuestionRepository;
 import com.sumit.ltim.web.quiz.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getQuestionById(Long id) {
         return questionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Question not found with id " + id));
+                .orElseThrow(() -> new QuestionNotFoundException("Question not found with id " + id));
+
     }
 
     @Override
@@ -43,25 +45,17 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAll();
     }
 
-    @Override
-    public List<Question> getFilteredQuestions(String subject, String topic, String exam, QuestionType questionType) {
-        return questionRepository.findByFilters(subject, topic, exam, questionType);
-    }
-
 //    @Override
-//    public Question updateQuestion(Long id, Question questionDetails) {
-//        return questionRepository.findById(id)
-//                .map(question -> {
-//                    question.setText(questionDetails.getText());
-//                    question.setExplanation(questionDetails.getExplanation());
-//                    question.setSubject(questionDetails.getSubject());
-//                    question.setTopic(questionDetails.getTopic());
-//                    question.setExam(questionDetails.getExam());
-//                    question.setQuestionType(questionDetails.getQuestionType());
-//                    question.setDifficulty(questionDetails.getDifficulty());
-//                    return questionRepository.save(question);
-//                }).orElseThrow(() -> new RuntimeException("Question not found with id " + id));
+//    public List<Question> getFilteredQuestions(String subject, String topic, String exam, QuestionType questionType) {
+//        return questionRepository.findByFilters(subject, topic, exam, questionType);
 //    }
+    @Override
+    public List<Question> getFilteredQuestions(String subject, String topic, String exam, String difficulty) {
+        return questionRepository.findByFilters(subject, topic, exam, difficulty);
+    }
+    public List<Question> getQuestionsByTestId(Long testId) {
+        return questionRepository.findByTests_Id(testId);  // Fetch questions by test_id
+    }
 
     @Override
     public Question updateQuestion(Long id, Question question) {
