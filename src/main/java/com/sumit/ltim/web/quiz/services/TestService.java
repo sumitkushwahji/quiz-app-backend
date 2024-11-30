@@ -6,10 +6,11 @@ import com.sumit.ltim.web.quiz.entities.Test;
 import java.util.List;
 
 public interface TestService {
-    Test saveTest(Test test);
+    Test createTest(Test test);
+
     Test getTestById(Long id);
+
     List<Test> getAllTests();
-    Test updateTest(Long id, Test test);
+
     void deleteTest(Long id);
-    Test createTestWithRandomQuestions(String subject, String topic, String exam, int numberOfQuestions);
 }

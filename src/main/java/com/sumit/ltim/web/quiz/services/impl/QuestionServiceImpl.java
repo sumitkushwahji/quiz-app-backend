@@ -45,14 +45,22 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAll();
     }
 
-//    @Override
-//    public List<Question> getFilteredQuestions(String subject, String topic, String exam, QuestionType questionType) {
-//        return questionRepository.findByFilters(subject, topic, exam, questionType);
-//    }
+
     @Override
-    public List<Question> getFilteredQuestions(String subject, String topic, String exam, String difficulty) {
-        return questionRepository.findByFilters(subject, topic, exam, difficulty);
+    public List<Question> getFilteredQuestions(String subject, String topic, String exam, String difficulty, QuestionType questionType) {
+        return questionRepository.findByFilters(subject, topic, exam, difficulty, questionType);
     }
+
+    @Override
+    public List<Question> filterQuestions(String subject, String topic, String exam, String difficulty, QuestionType questionType) {
+        return questionRepository.findByFilters(subject, topic, exam, difficulty, questionType);
+    }
+
+    @Override
+    public List<Question> getRandomQuestions(String subject, String topic, String exam, int numberOfQuestions) {
+        return questionRepository.findRandomQuestions(subject, topic, exam, numberOfQuestions);
+    }
+
     public List<Question> getQuestionsByTestId(Long testId) {
         return questionRepository.findByTests_Id(testId);  // Fetch questions by test_id
     }

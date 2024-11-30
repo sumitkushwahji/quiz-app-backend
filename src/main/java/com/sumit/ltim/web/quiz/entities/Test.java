@@ -1,5 +1,7 @@
 package com.sumit.ltim.web.quiz.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +40,7 @@ public class Test {
     private Integer questionCount; // Number of questions in the test
 
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
             name = "test_question",
             joinColumns = @JoinColumn(name = "test_id"),

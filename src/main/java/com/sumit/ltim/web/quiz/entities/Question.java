@@ -1,9 +1,9 @@
 package com.sumit.ltim.web.quiz.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
-
 @Entity
 @Data
 public class Question {
@@ -23,8 +23,11 @@ public class Question {
     private String difficulty; // For easy, medium, hard categorization
 
     @ManyToMany(mappedBy = "questions")
+    @JsonBackReference // Prevent cyclic serialization
     private List<Test> tests; // Link to multiple tests
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Option> options;
 }
+
+

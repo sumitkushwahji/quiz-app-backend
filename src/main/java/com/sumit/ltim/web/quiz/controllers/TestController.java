@@ -12,52 +12,31 @@ import java.util.List;
 @RequestMapping("/api/tests")
 public class TestController {
 
-    private final TestService testService;
-
     @Autowired
-    public TestController(TestService testService) {
-        this.testService = testService;
+    private TestService testService;
+
+    // Create a new test
+    @PostMapping("/create")
+    public Test createTest(@RequestBody Test test) {
+        return testService.createTest(test);
     }
 
-    @PostMapping
-    public ResponseEntity<Test> createTest(@RequestBody Test test) {
-        Test savedTest = testService.saveTest(test);
-        return ResponseEntity.ok(savedTest);
-    }
-
+    // Get a test by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Test> getTestById(@PathVariable Long id) {
-        Test test = testService.getTestById(id);
-        return ResponseEntity.ok(test);
+    public Test getTestById(@PathVariable Long id) {
+        return testService.getTestById(id);
     }
 
+    // Get all tests
     @GetMapping
-    public ResponseEntity<List<Test>> getAllTests() {
-        List<Test> tests = testService.getAllTests();
-        return ResponseEntity.ok(tests);
+    public List<Test> getAllTests() {
+        return testService.getAllTests();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Test> updateTest(@PathVariable Long id, @RequestBody Test test) {
-        Test updatedTest = testService.updateTest(id, test);
-        return ResponseEntity.ok(updatedTest);
-    }
-
+    // Delete a test by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTest(@PathVariable Long id) {
+    public String deleteTest(@PathVariable Long id) {
         testService.deleteTest(id);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    @PostMapping("/create-random")
-    public ResponseEntity<Test> createTestWithRandomQuestions(
-            @RequestParam String subject,
-            @RequestParam String topic,
-            @RequestParam String exam,
-            @RequestParam int numberOfQuestions
-    ) {
-        Test test = testService.createTestWithRandomQuestions(subject, topic, exam, numberOfQuestions);
-        return ResponseEntity.ok(test);
+        return "Test with ID " + id + " has been deleted.";
     }
 }

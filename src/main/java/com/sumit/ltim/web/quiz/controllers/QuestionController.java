@@ -26,36 +26,52 @@ public class QuestionController {
         return ResponseEntity.ok(savedQuestion);
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Question> getQuestionById(@PathVariable Long id) {
-        Question question = questionService.getQuestionById(id);
-        return ResponseEntity.ok(question);
+    public ResponseEntity<Question> getQuestionById(@PathVariable("id") String id) {
+        try {
+            Long questionId = Long.parseLong(id); // Explicit type conversion
+            Question question = questionService.getQuestionById(questionId);
+            return ResponseEntity.ok(question);
+        } catch (NumberFormatException ex) {
+            return ResponseEntity.badRequest().body(null); // Handle invalid id format
+        }
     }
+
     @GetMapping("/test/{testId}")
     public List<Question> getQuestionsByTestId(@PathVariable Long testId) {
         return questionService.getQuestionsByTestId(testId);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<Question>> getQuestions(
-//            @RequestParam(required = false) String subject,
-//            @RequestParam(required = false) String topic,
-//            @RequestParam(required = false) String exam,
-//            @RequestParam(required = false) QuestionType questionType
-//    ) {
-//        List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, questionType);
-//        return ResponseEntity.ok(questions);
-//    }
     // Endpoint to fetch filtered questions
-    @GetMapping
-    public ResponseEntity<List<Question>> getFilteredQuestions(
+    @GetMapping("/filter")
+      public ResponseEntity<List<Question>> getFilteredQuestions(
             @RequestParam(required = false) String subject,
             @RequestParam(required = false) String topic,
             @RequestParam(required = false) String exam,
-            @RequestParam(required = false) String difficulty
+            @RequestParam(required = false) String difficulty,
+            @RequestParam(required = false) QuestionType questionType
     ) {
-        List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, difficulty);
+        List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, difficulty, questionType);
         return ResponseEntity.ok(questions);
+    }
+
+
+    @GetMapping("/filter-questions")
+    public List<Question> filterQuestions(@RequestParam(required = false) String subject,
+                                          @RequestParam(required = false) String topic,
+                                          @RequestParam(required = false) String exam,
+                                          @RequestParam(required = false) String difficulty,
+                                          @RequestParam(required = false) QuestionType questionType) {
+        return questionService.filterQuestions(subject, topic, exam, difficulty, questionType);
+    }
+
+    @GetMapping("/random-questions")
+    public List<Question> getRandomQuestions(@RequestParam String subject,
+                                             @RequestParam String topic,
+                                             @RequestParam String exam,
+                                             @RequestParam int numberOfQuestions) {
+        return questionService.getRandomQuestions(subject, topic, exam, numberOfQuestions);
     }
 
     // Get all questions by subject

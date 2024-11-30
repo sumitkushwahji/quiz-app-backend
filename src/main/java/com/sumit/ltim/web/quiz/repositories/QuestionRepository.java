@@ -14,32 +14,23 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findByTests_Id(Long testId);  // Find questions by test ID
     List<Question> findByExam(String exam);
 
-//    @Query("SELECT q FROM Question q WHERE " +
-//            "(:subject IS NULL OR q.subject = :subject) AND " +
-//            "(:topic IS NULL OR q.topic = :topic) AND " +
-//            "(:exam IS NULL OR q.exam = :exam) AND " +
-//            "(:questionType IS NULL OR q.questionType = :questionType)")
-//    List<Question> findByFilters(
-//            @Param("subject") String subject,
-//            @Param("topic") String topic,
-//            @Param("exam") String exam,
-//            @Param("questionType") QuestionType questionType
-//    );
 
     // Fetch random questions based on subject, topic, and exam
     @Query("SELECT q FROM Question q WHERE (:subject IS NULL OR q.subject = :subject) AND (:topic IS NULL OR q.topic = :topic) AND (:exam IS NULL OR q.exam = :exam) ORDER BY RANDOM() LIMIT :numberOfQuestions")
     List<Question> findRandomQuestions(@Param("subject") String subject, @Param("topic") String topic, @Param("exam") String exam, @Param("numberOfQuestions") int numberOfQuestions);
 
-    // Dynamic filter for subject, topic, and exam
     @Query("SELECT q FROM Question q WHERE " +
             "(:subject IS NULL OR q.subject = :subject) AND " +
             "(:topic IS NULL OR q.topic = :topic) AND " +
             "(:exam IS NULL OR q.exam = :exam) AND " +
-            "(:difficulty IS NULL OR q.difficulty = :difficulty)")
+            "(:difficulty IS NULL OR q.difficulty = :difficulty) AND " +
+            "(:questionType IS NULL OR q.questionType = :questionType)")
     List<Question> findByFilters(@Param("subject") String subject,
                                  @Param("topic") String topic,
                                  @Param("exam") String exam,
-                                 @Param("difficulty") String difficulty);
+                                 @Param("difficulty") String difficulty,
+                                 @Param("questionType") QuestionType questionType);
+
 
     @Query("SELECT DISTINCT q.subject FROM Question q")
     List<String> findDistinctSubjects();
