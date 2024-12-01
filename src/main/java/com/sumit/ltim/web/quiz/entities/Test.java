@@ -10,9 +10,9 @@ import java.util.List;
 
 @Entity
 @Data
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Test {
     @Id
+    @Column(name = "test_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -39,8 +39,7 @@ public class Test {
 
     private Integer questionCount; // Number of questions in the test
 
-    @ManyToMany
-    @JsonManagedReference
+    @ManyToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "test_question",
             joinColumns = @JoinColumn(name = "test_id"),
