@@ -12,6 +12,7 @@ public class Option {
     private long id;
 
     private String text;
+    @Column(name = "is_correct")
     private Boolean isCorrect;
 
     @ManyToOne

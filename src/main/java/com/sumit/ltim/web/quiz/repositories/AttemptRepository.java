@@ -1,13 +1,14 @@
 package com.sumit.ltim.web.quiz.repositories;
 
 import com.sumit.ltim.web.quiz.entities.Attempt;
-import com.sumit.ltim.web.quiz.entities.Test;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-@Repository
 public interface AttemptRepository extends JpaRepository<Attempt, Long> {
-    List<Attempt> findByTest(Test test);
+    Optional<Attempt> findByUserIdAndTestId(Long userId, Long testId);
+    List<Attempt> findByUserId(Long userId);
+    List<Attempt> findAllByUserId(Long userId);
+
 }

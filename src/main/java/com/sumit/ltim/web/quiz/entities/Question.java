@@ -28,7 +28,7 @@ public class Question {
     @JsonBackReference // Prevent cyclic serialization
     private List<Test> tests; // Link to multiple tests
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<Option> options;
 }
 

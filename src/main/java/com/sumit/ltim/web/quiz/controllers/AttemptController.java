@@ -1,38 +1,58 @@
 package com.sumit.ltim.web.quiz.controllers;
 
 import com.sumit.ltim.web.quiz.entities.Attempt;
-
 import com.sumit.ltim.web.quiz.services.AttemptService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/attempts")
 public class AttemptController {
 
-    @Autowired
-    private AttemptService attemptService;
+    private final AttemptService attemptService;
 
-    @PostMapping
-    public ResponseEntity<Attempt> startAttempt(@RequestBody Attempt attempt) {
-        return ResponseEntity.ok(attemptService.startAttempt(attempt));
+    public AttemptController(AttemptService attemptService) {
+        this.attemptService = attemptService;
     }
 
-    @GetMapping("/{testId}")
-    public ResponseEntity<List<Attempt>> getAttemptsByTestId(@PathVariable Long testId) {
-        return ResponseEntity.ok(attemptService.getAttemptsByTestId(testId));
+    @PostMapping("/start")
+    public ResponseEntity<Attempt> startAttempt(@RequestParam Long userId, @RequestParam Long testId) {
+        Attempt attempt = attemptService.startAttempt(userId, testId);
+        return ResponseEntity.ok(attempt);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Attempt> submitAttempt(@PathVariable Long id, @RequestBody Attempt attemptDetails) {
-        return ResponseEntity.ok(attemptService.submitAttempt(id, attemptDetails));
+    @PostMapping("/{attemptId}/answers")
+    public ResponseEntity<Map<String, String>> submitAnswer(
+            @PathVariable Long attemptId,
+            @RequestParam Long questionId,
+            @RequestParam String userAnswer) {
+        attemptService.submitAnswer(attemptId, questionId, userAnswer);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Answer saved successfully");
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Attempt> getAttemptById(@PathVariable Long id) {
-        return ResponseEntity.ok(attemptService.getAttemptById(id));
+
+    @PostMapping("/{attemptId}/end")
+    public ResponseEntity<Integer> endAttempt(@PathVariable Long attemptId) {
+        int score = attemptService.endAttempt(attemptId);
+        return ResponseEntity.ok(score);
     }
+
+    @GetMapping("/{attemptId}/review")
+    public ResponseEntity<List<Map<String, Object>>> getAttemptReview(@PathVariable Long attemptId) {
+        List<Map<String, Object>> review = attemptService.getAttemptReview(attemptId);
+        return ResponseEntity.ok(review);
+    }
+
+    @GetMapping("/user/{userId}/attempted-tests")
+    public ResponseEntity<List<Long>> getAttemptedTests(@PathVariable Long userId) {
+        List<Long> attemptedTestIds = attemptService.getAttemptedTestsByUserId(userId);
+        return ResponseEntity.ok(attemptedTestIds);
+    }
+
 }
