@@ -43,4 +43,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     // Query to fetch questions by subject
     List<Question> findBySubject(String subject);
+
+
+
+    @Query("SELECT AVG(t.questionCount) FROM Test t")
+    Double calculateQuestionsPerTest();
 }
