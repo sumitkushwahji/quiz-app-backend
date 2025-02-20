@@ -1,5 +1,6 @@
 package com.sumit.ltim.web.quiz.entities;
 
+import com.sumit.ltim.web.quiz.models.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
