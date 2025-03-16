@@ -1,6 +1,7 @@
 package com.sumit.ltim.web.quiz.services.impl;
 
 import com.sumit.ltim.web.quiz.entities.*;
+import com.sumit.ltim.web.quiz.models.User;
 import com.sumit.ltim.web.quiz.repositories.*;
 import com.sumit.ltim.web.quiz.services.AttemptService;
 import org.springframework.context.annotation.Lazy;

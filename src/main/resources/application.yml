@@ -15,3 +15,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+bezkoder:
+  app:
+    jwtSecret: "======================BezKoder=Spring==========================="
+    jwtExpirationMs: 86400000
