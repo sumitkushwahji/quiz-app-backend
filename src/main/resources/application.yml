@@ -1,16 +1,18 @@
 server:
-  port: 8082
+  port: 3001
+  servlet:
+    context-path: /quiz-app-service
 
 spring:
   datasource:
       url: jdbc:postgresql://localhost:5432/webquiz
-      username: admin
-      password: admin
+      username: postgres
+      password: Aditya623880
       driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
