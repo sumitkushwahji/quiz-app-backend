@@ -53,6 +53,7 @@ public class QuestionController {
             @RequestParam(required = false) QuestionType questionType
     ) {
         List<Question> questions = questionService.getFilteredQuestions(subject, topic, exam, difficulty, questionType);
+        System.out.println(questions);
         return ResponseEntity.ok(questions);
     }
 
