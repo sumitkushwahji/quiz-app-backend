@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/webquiz
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update

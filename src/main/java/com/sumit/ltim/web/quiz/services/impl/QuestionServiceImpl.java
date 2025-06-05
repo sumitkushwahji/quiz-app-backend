@@ -34,6 +34,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<Question> saveAllQuestions(List<Question> questions) {
+        for (Question question : questions) {
+            // Ensure options are linked to their respective question
+            for (Option option : question.getOptions()) {
+                option.setQuestion(question);
+            }
+        }
+        return questionRepository.saveAll(questions);
+    }
+
+    @Override
     public Question getQuestionById(Long id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException("Question not found with id " + id));

@@ -12,7 +12,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id")
     private Long id;
-
+    @Column(columnDefinition = "TEXT")
     private String text;
     private String explanation; // Optional for questions
     private String subject;

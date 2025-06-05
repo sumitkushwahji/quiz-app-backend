@@ -2,6 +2,8 @@ server:
   port: 8082
 
 spring:
+  profiles:
+    active: dev
   datasource:
       url: jdbc:postgresql://localhost:5432/webquiz
       username: admin
@@ -19,3 +21,10 @@ bezkoder:
   app:
     jwtSecret: "======================BezKoder=Spring==========================="
     jwtExpirationMs: 86400000
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

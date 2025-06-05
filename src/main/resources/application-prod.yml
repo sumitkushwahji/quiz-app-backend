@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/webquiz2
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+                                          
