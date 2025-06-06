@@ -11,7 +11,10 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "TEXT")
     private String text;
+
+
     @Column(name = "is_correct")
     private Boolean isCorrect;
 

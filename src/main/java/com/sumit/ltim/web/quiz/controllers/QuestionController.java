@@ -26,6 +26,12 @@ public class QuestionController {
         return ResponseEntity.ok(savedQuestion);
     }
 
+    // Save multiple questions with options
+    @PostMapping("/saveAll")
+    public ResponseEntity<List<Question>> saveAllQuestions(@RequestBody List<Question> questions) {
+        List<Question> savedQuestions = questionService.saveAllQuestions(questions);
+        return ResponseEntity.ok(savedQuestions);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable("id") String id) {
